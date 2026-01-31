@@ -63,6 +63,14 @@ export class WebLocators {
     readonly familySuccess: Locator;
     readonly familyUpdateSuccess: Locator;
     readonly familyDeleteSuccess: Locator;
+    readonly customerfirstname: Locator;
+    readonly customerlastname: Locator;
+    readonly customeremail: Locator;
+    readonly customergender: Locator;
+    readonly customerNumber: Locator;
+    readonly customercreatedsuccess: Locator;
+    readonly viewIcon: Locator;
+    readonly customerDeleteSuccess: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -155,6 +163,18 @@ export class WebLocators {
         );
         this.familyDeleteSuccess = page.getByText(
             /Family deleted successfully./,
+        );
+        this.customerfirstname = page.locator('input[name="first_name"]');
+        this.customerlastname = page.locator('input[name="last_name"]');
+        this.customeremail = page.locator('input[name="email"]');
+        this.customergender = page.locator('select[name="gender"]');
+        this.customerNumber = page.locator('input[name="phone"]');
+        this.customercreatedsuccess = page.getByText(
+            "Customer created successfully.",
+        );
+        this.viewIcon = page.locator("a.icon-sort-right.cursor-pointer");
+        this.customerDeleteSuccess = page.getByText(
+            "Selected data successfully deleted",
         );
     }
 }

@@ -432,35 +432,7 @@ test.describe("acl management", () => {
             ]);
             await aclManagement.createUser();
             await aclManagement.verfiyAssignedRole(["customers->customers"]);
-            await adminPage.goto("admin/customers");
-            await adminPage.waitForSelector("button.primary-button:visible", {
-                state: "visible",
-            });
-
-            await adminPage.click("button.primary-button:visible");
-
-            await adminPage.fill(
-                'input[name="first_name"]:visible',
-                generateFirstName(),
-            );
-            await adminPage.fill(
-                'input[name="last_name"]:visible',
-                generateLastName(),
-            );
-            await adminPage.fill(
-                'input[name="email"]:visible',
-                generateEmail(),
-            );
-            await adminPage.selectOption(
-                'select[name="gender"]:visible',
-                randomElement(["Male", "Female", "Other"]),
-            );
-
-            await adminPage.press('input[name="phone"]:visible', "Enter");
-
-            await expect(
-                adminPage.getByText("Customer created successfully"),
-            ).toBeVisible();
+            await aclManagement.customerCreateVerify();
         });
 
         test("should create custom role with customers (customers->edit) permission", async ({
@@ -472,12 +444,7 @@ test.describe("acl management", () => {
             ]);
             await aclManagement.createUser();
             await aclManagement.verfiyAssignedRole(["customers->customers"]);
-            await expect(
-                adminPage.locator("button.primary-button"),
-            ).not.toBeVisible();
-            await expect(
-                adminPage.locator("a.icon-sort-right.cursor-pointer").first(),
-            ).toBeVisible();
+            await aclManagement.customerEditVerify();
         });
 
         test("should create custom role with customers (customers->delete) permission", async ({
@@ -489,22 +456,7 @@ test.describe("acl management", () => {
             ]);
             await aclManagement.createUser();
             await aclManagement.verfiyAssignedRole(["customers->customers"]);
-            await expect(
-                adminPage.locator("button.primary-button"),
-            ).not.toBeVisible();
-            await adminPage.locator(".icon-uncheckbox").nth(1).click();
-            await adminPage
-                .getByRole("button", { name: "Select Action" })
-                .click();
-            await adminPage.getByRole("link", { name: "Delete" }).click();
-            await adminPage
-                .getByRole("button", { name: "Agree", exact: true })
-                .click();
-            await expect(
-                adminPage
-                    .getByText("Selected data successfully deleted")
-                    .first(),
-            ).toBeVisible();
+            await aclManagement.customerDeleteVerify();
         });
 
         test("should create custom role with customers (groups) permission", async ({

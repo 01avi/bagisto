@@ -1,6 +1,15 @@
 import { Page, expect } from "@playwright/test";
 import { WebLocators } from "../locators/locator";
-import { generateEmail } from "../utils/faker";
+import {
+    generateFirstName,
+    generateLastName,
+    generateEmail,
+    randomElement,
+    generateName,
+    generateSlug,
+    generateDescription,
+    generateRandomDate,
+} from "../utils/faker";
 
 const ACL_Routes: Record<
     string,
@@ -605,7 +614,7 @@ export class ACLManagement {
         await expect(this.locators.createBtn).not.toBeVisible();
         await this.locators.editBtn.click();
         await this.page.waitForLoadState("networkidle");
-        await this.locators.saveBtn.click();
+        await this.locators.createBtn.click();
         await expect(this.locators.successMSG.first()).toBeVisible();
     }
 
@@ -631,7 +640,7 @@ export class ACLManagement {
 
     async categoryEditVerify() {
         await expect(this.locators.createBtn).not.toBeVisible();
-        await this.locators.editBtn.first().click();
+        await this.locators.iconEdit.first().click();
         await this.page.waitForLoadState("networkidle");
         await this.locators.saveCategoryBtn.click();
         await expect(this.locators.categorySuccess.first()).toBeVisible();
@@ -639,8 +648,8 @@ export class ACLManagement {
 
     async categoryDeleteVerify() {
         await expect(this.locators.createBtn).not.toBeVisible();
-        await expect(this.locators.editBtn.first()).not.toBeVisible();
-        await this.locators.selectRowBtn.first().click();
+        await expect(this.locators.iconEdit.first()).not.toBeVisible();
+        await this.locators.selectRowBtn.nth(1).click();
         await this.locators.selectAction.click();
         await this.locators.deleteBtn.click();
         await this.locators.agreeBtn.click();
@@ -653,15 +662,16 @@ export class ACLManagement {
         await this.locators.createBtn.click();
         await this.page.waitForLoadState("networkidle");
         await this.locators.fillname.fill("Test Attribute");
-        await this.locators.fillCode.fill("test-attribute");
+        await this.locators.fillCode.fill("testattribute");
+        await this.locators.selectTypeAttribute.selectOption("text");
         await this.locators.saveAttributeBtn.click();
         await expect(this.locators.attributeSuccess.first()).toBeVisible();
     }
 
     async attributeEditVerify() {
         await expect(this.locators.createBtn).not.toBeVisible();
-        await expect(this.locators.editBtn.first()).toBeVisible();
-        await this.locators.editBtn.first().click();
+        await expect(this.locators.iconEdit.first()).toBeVisible();
+        await this.locators.iconEdit.first().click();
         await this.page.waitForLoadState("networkidle");
         await this.locators.saveAttributeBtn.click();
         await expect(
@@ -671,7 +681,7 @@ export class ACLManagement {
 
     async attributeDeleteVerify() {
         await expect(this.locators.createBtn).not.toBeVisible();
-        await expect(this.locators.editBtn.first()).not.toBeVisible();
+        await expect(this.locators.iconEdit.first()).not.toBeVisible();
         await this.locators.deleteIcon.first().click();
         await this.locators.agreeBtn.click();
         await expect(
@@ -693,7 +703,7 @@ export class ACLManagement {
     async familyEditVerify() {
         await this.page.waitForLoadState("networkidle");
         await expect(this.locators.createBtn).not.toBeVisible();
-        await this.locators.editBtn.first().click();
+        await this.locators.iconEdit.first().click();
         await this.page.waitForLoadState("networkidle");
         await this.locators.createBtn.click();
         await expect(this.locators.familyUpdateSuccess.first()).toBeVisible();
@@ -706,5 +716,36 @@ export class ACLManagement {
         await this.locators.deleteIcon.first().click();
         await this.locators.agreeBtn.click();
         await expect(this.locators.familyDeleteSuccess.first()).toBeVisible();
+    }
+
+    async customerCreateVerify() {
+        await this.page.goto("admin/customers");
+        await this.locators.createBtn.click();
+        await this.locators.customerfirstname.fill(generateFirstName());
+        await this.locators.customerlastname.fill(generateLastName());
+        await this.locators.customeremail.fill(generateEmail());
+        await this.locators.customergender.selectOption(
+            randomElement(["Male", "Female", "Other"]),
+        );
+        await this.locators.customerNumber.fill("1234567890");
+        await this.locators.customerNumber.press("Enter");
+        await expect(
+            this.locators.customercreatedsuccess.first(),
+        ).toBeVisible();
+    }
+
+    async customerEditVerify() {
+        await this.page.goto("admin/customers");
+        await expect(this.locators.createBtn).not.toBeVisible();
+        await expect(this.locators.viewIcon.first()).toBeVisible();
+    }
+
+    async customerDeleteVerify() {
+        await expect(this.locators.createBtn).not.toBeVisible();
+        await this.locators.selectRowBtn.first().click();
+        await this.locators.selectAction.click();
+        await this.locators.deleteBtn.click();
+        await this.locators.agreeBtn.click();
+        await expect(this.locators.customerDeleteSuccess.first()).toBeVisible();
     }
 }
