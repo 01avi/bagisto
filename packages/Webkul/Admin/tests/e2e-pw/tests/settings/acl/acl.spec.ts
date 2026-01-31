@@ -846,13 +846,13 @@ test.describe("acl management", () => {
             await expect(
                 adminPage.locator("span.icon-edit").first(),
             ).not.toBeVisible();
-            await adminPage.waitForLoadState("networkidle");
-            await adminPage.click(
-                'button.primary-button:has-text("Save Page")',
-            );
+            await adminPage.locator(".icon-delete").first().click();
+            await adminPage
+                .getByRole("button", { name: "Agree", exact: true })
+                .click();
             await expect(
                 adminPage.locator("#app p", {
-                    hasText: "CMS updated successfully.",
+                    hasText: "CMS deleted successfully.",
                 }),
             ).toBeVisible();
         });
@@ -1239,7 +1239,7 @@ test.describe("acl management", () => {
             ]);
             await aclManagement.createUser();
             await aclManagement.verfiyAssignedRole([
-                "marketing->communications->events",
+                "marketing->communications->event",
             ]);
             await adminPage.click("div.primary-button:visible");
 
@@ -1273,7 +1273,7 @@ test.describe("acl management", () => {
             ]);
             await aclManagement.createUser();
             await aclManagement.verfiyAssignedRole([
-                "marketing->communications->events",
+                "marketing->communications->event",
             ]);
             await expect(
                 adminPage.locator("div.primary-button:visible"),
@@ -1298,7 +1298,7 @@ test.describe("acl management", () => {
             ]);
             await aclManagement.createUser();
             await aclManagement.verfiyAssignedRole([
-                "marketing->communications->events",
+                "marketing->communications->event",
             ]);
             await expect(
                 adminPage.locator("div.primary-button"),

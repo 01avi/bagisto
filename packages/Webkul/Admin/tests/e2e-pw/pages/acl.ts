@@ -259,6 +259,42 @@ const ACL_Routes: Record<
         ],
     },
 
+    "marketing->communications->event": {
+        allowed: "admin/marketing/communications/events",
+        sidebar: "/admin/marketing/communications/events",
+        notAllowed: [
+            "admin/dashboard",
+            "admin/catalog/products",
+            "admin/customers",
+            "admin/cms",
+            "admin/marketing/promotions/catalog-rules",
+            "admin/reporting/sales",
+            "admin/settings/locales",
+            "admin/configuration",
+            "admin/sales/orders",
+            "admin/sales/transactions",
+            "admin/marketing/communications/email-templates",
+        ],
+    },
+
+    "marketing->communications->event": {
+        allowed: "admin/marketing/communications/events",
+        sidebar: "/admin/marketing/communications/events",
+        notAllowed: [
+            "admin/dashboard",
+            "admin/catalog/products",
+            "admin/customers",
+            "admin/cms",
+            "admin/marketing/promotions/catalog-rules",
+            "admin/reporting/sales",
+            "admin/settings/locales",
+            "admin/configuration",
+            "admin/sales/orders",
+            "admin/sales/transactions",
+            "admin/marketing/communications/email-templates",
+        ],
+    },
+
     "marketing->search_seo": {
         allowed: "admin/marketing/search-seo/url-rewrites",
         sidebar: "/admin/marketing/search-seo/url-rewrites",
@@ -397,7 +433,7 @@ const ACL_Routes: Record<
         ],
     },
 
-        "settings->data_transfer": {
+    "settings->data_transfer": {
         allowed: "admin/settings/data-transfer/imports",
         sidebar: "/admin/settings/data-transfer/imports",
         notAllowed: [
