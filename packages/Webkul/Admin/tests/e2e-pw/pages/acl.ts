@@ -594,4 +594,117 @@ export class ACLManagement {
             ).toBeVisible();
         }
     }
+
+    async orderCreateVerify() {
+        await expect(this.locators.createBtn).toBeVisible();
+        await this.locators.createBtn.click();
+        await expect(this.locators.saveBtn).toBeVisible();
+    }
+
+    async productEditVerify() {
+        await expect(this.locators.createBtn).not.toBeVisible();
+        await this.locators.editBtn.click();
+        await this.page.waitForLoadState("networkidle");
+        await this.locators.saveBtn.click();
+        await expect(this.locators.successMSG.first()).toBeVisible();
+    }
+
+    async productCopyVerify() {
+        await this.page.waitForLoadState("networkidle");
+        await expect(this.locators.createBtn).not.toBeVisible();
+        await expect(this.locators.viewBtn.nth(1)).not.toBeVisible();
+        await this.locators.copyBtn.nth(1).click();
+        await this.locators.agreeBtn.click();
+        await expect(this.locators.copySuccess.first()).toBeVisible();
+    }
+
+    async productDeleteVerify() {
+        await this.page.waitForLoadState("networkidle");
+        await expect(this.locators.createBtn).not.toBeVisible();
+        await expect(this.locators.viewBtn.nth(1)).not.toBeVisible();
+        await this.locators.selectRowBtn.nth(2).click();
+        await this.locators.selectAction.click();
+        await this.locators.selectDelete.click();
+        await this.locators.agreeBtn.click();
+        await expect(this.locators.productDeleteSuccess.first()).toBeVisible();
+    }
+
+    async categoryEditVerify() {
+        await expect(this.locators.createBtn).not.toBeVisible();
+        await this.locators.editBtn.first().click();
+        await this.page.waitForLoadState("networkidle");
+        await this.locators.saveCategoryBtn.click();
+        await expect(this.locators.categorySuccess.first()).toBeVisible();
+    }
+
+    async categoryDeleteVerify() {
+        await expect(this.locators.createBtn).not.toBeVisible();
+        await expect(this.locators.editBtn.first()).not.toBeVisible();
+        await this.locators.selectRowBtn.first().click();
+        await this.locators.selectAction.click();
+        await this.locators.deleteBtn.click();
+        await this.locators.agreeBtn.click();
+        await expect(this.locators.categoryDeleteSuccess.first()).toBeVisible();
+    }
+
+    async attributeCreateVerify() {
+        await expect(this.locators.createBtn).toBeVisible();
+        await expect(this.locators.editBtn.first()).not.toBeVisible();
+        await this.locators.createBtn.click();
+        await this.page.waitForLoadState("networkidle");
+        await this.locators.fillname.fill("Test Attribute");
+        await this.locators.fillCode.fill("test-attribute");
+        await this.locators.saveAttributeBtn.click();
+        await expect(this.locators.attributeSuccess.first()).toBeVisible();
+    }
+
+    async attributeEditVerify() {
+        await expect(this.locators.createBtn).not.toBeVisible();
+        await expect(this.locators.editBtn.first()).toBeVisible();
+        await this.locators.editBtn.first().click();
+        await this.page.waitForLoadState("networkidle");
+        await this.locators.saveAttributeBtn.click();
+        await expect(
+            this.locators.attributeUpdateSuccess.first(),
+        ).toBeVisible();
+    }
+
+    async attributeDeleteVerify() {
+        await expect(this.locators.createBtn).not.toBeVisible();
+        await expect(this.locators.editBtn.first()).not.toBeVisible();
+        await this.locators.deleteIcon.first().click();
+        await this.locators.agreeBtn.click();
+        await expect(
+            this.locators.attributeDeleteSuccess.first(),
+        ).toBeVisible();
+    }
+
+    async familyCreateVerify() {
+        await this.page.waitForLoadState("networkidle");
+        await expect(this.locators.editBtn.first()).not.toBeVisible();
+        await this.locators.createBtn.click();
+        await this.page.waitForLoadState("networkidle");
+        await this.locators.familyName.fill("Test Family");
+        await this.locators.fillCode.fill("family");
+        await this.locators.createBtn.click();
+        await expect(this.locators.familySuccess.first()).toBeVisible();
+    }
+
+    async familyEditVerify() {
+        await this.page.waitForLoadState("networkidle");
+        await expect(this.locators.createBtn).not.toBeVisible();
+        await this.locators.editBtn.first().click();
+        await this.page.waitForLoadState("networkidle");
+        await this.locators.createBtn.click();
+        await expect(this.locators.familyUpdateSuccess.first()).toBeVisible();
+    }
+
+    async familyDeleteVerify() {
+        await this.page.waitForLoadState("networkidle");
+        await expect(this.locators.createBtn).not.toBeVisible();
+        await expect(this.locators.editBtn.first()).not.toBeVisible();
+        await this.locators.deleteIcon.first().click();
+        await this.locators.agreeBtn.click();
+        await expect(this.locators.familyDeleteSuccess.first()).toBeVisible();
+    }
 }
